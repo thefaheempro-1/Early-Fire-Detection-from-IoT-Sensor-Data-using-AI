@@ -1,0 +1,134 @@
+Loaded 62630 rows, 106 blocks, 5 recording segments
+Fire prevalence: 0.7146; exact duplicate sensor rows: 2
+Features: ['Temperature_C', 'Humidity_pct', 'TVOC_ppb', 'eCO2_ppm', 'Raw_H2', 'Raw_Ethanol', 'Pressure_hPa', 'PM1_0', 'PM2_5', 'NC0_5', 'NC1_0', 'NC2_5', 'd_Temperature_C', 'd_TVOC_ppb', 'd_eCO2_ppm', 'd_Humidity_pct', 'roll5_TVOC_ppb', 'roll5_eCO2_ppm']
+
+=== E1: block-wise train/val/test split, seeds [42, 43, 44, 45, 46] ===
+  seed 42: train/val/test = 37938/12738/11954 | hybrid F1=0.9408 AUC=0.9976 RF F1=0.9580 | hybrid thr=0.268 (tuned on val)
+  seed 43: train/val/test = 37892/12738/12000 | hybrid F1=0.9998 AUC=1.0000 RF F1=0.9999 | hybrid thr=0.275 (tuned on val)
+  seed 44: train/val/test = 37942/12688/12000 | hybrid F1=0.9996 AUC=1.0000 RF F1=1.0000 | hybrid thr=0.496 (tuned on val)
+  seed 45: train/val/test = 37686/12944/12000 | hybrid F1=0.9971 AUC=0.9998 RF F1=0.9957 | hybrid thr=0.216 (tuned on val)
+  seed 46: train/val/test = 37686/12944/12000 | hybrid F1=0.9457 AUC=1.0000 RF F1=1.0000 | hybrid thr=0.115 (tuned on val)
+                                           accuracy          precision             recall                 f1                auc                fpr
+model                                                                                                                                             
+Random Forest                     0.9884 +/- 0.0201  0.9863 +/- 0.0263  0.9954 +/- 0.0064  0.9907 +/- 0.0164  0.9994 +/- 0.0012  0.0221 +/- 0.0411
+XGBoost                           0.9912 +/- 0.0158  0.9876 +/- 0.0228  0.9985 +/- 0.0025  0.9929 +/- 0.0129  0.9997 +/- 0.0004  0.0206 +/- 0.0354
+ANN                               0.9365 +/- 0.0593  0.9347 +/- 0.0838  0.9809 +/- 0.0131  0.9548 +/- 0.0439  0.9242 +/- 0.0827  0.1420 +/- 0.1558
+Logistic Regression               0.8779 +/- 0.0551  0.9018 +/- 0.0539  0.9233 +/- 0.0452  0.9119 +/- 0.0451  0.9185 +/- 0.0366  0.2262 +/- 0.0757
+Decision Tree (d=3)               0.9817 +/- 0.0172  0.9966 +/- 0.0022  0.9782 +/- 0.0237  0.9872 +/- 0.0125  0.9948 +/- 0.0060  0.0099 +/- 0.0091
+Isolation Forest                  0.8308 +/- 0.0618  0.8191 +/- 0.0761  0.9835 +/- 0.0179  0.8913 +/- 0.0422  0.7373 +/- 0.1095  0.5365 +/- 0.1734
+Autoencoder                       0.7831 +/- 0.1110  0.7962 +/- 0.1209  0.9631 +/- 0.0474  0.8641 +/- 0.0684  0.7853 +/- 0.0966  0.6199 +/- 0.3067
+Supervised Ensemble (no anomaly)  0.9790 +/- 0.0245  0.9712 +/- 0.0336  0.9986 +/- 0.0024  0.9845 +/- 0.0179  0.9994 +/- 0.0011  0.0601 +/- 0.0738
+Hybrid Ensemble                   0.9681 +/- 0.0369  0.9559 +/- 0.0517  0.9997 +/- 0.0002  0.9766 +/- 0.0273  0.9995 +/- 0.0009  0.0910 +/- 0.1063
+Isolation Forest (95th-pct rule)  0.2758 +/- 0.0649  0.1837 +/- 0.2250  0.0238 +/- 0.0299  0.0419 +/- 0.0525  0.7373 +/- 0.1095  0.0847 +/- 0.0715
+Autoencoder (95th-pct rule)       0.5413 +/- 0.2324  0.8358 +/- 0.1172  0.4460 +/- 0.3102  0.5243 +/- 0.2816  0.7853 +/- 0.0966  0.1739 +/- 0.1034
+Best Single Feature               0.8434 +/- 0.0825  0.8368 +/- 0.0935  0.9695 +/- 0.0366  0.8957 +/- 0.0605  0.5525 +/- 0.1672  0.4439 +/- 0.1840
+Majority Class                    0.7133 +/- 0.0680  0.7133 +/- 0.0680  1.0000 +/- 0.0000  0.8308 +/- 0.0475  0.5000 +/- 0.0000  1.0000 +/- 0.0000
+
+Probability calibration (Brier / ECE):
+                                  brier_mean  brier_std  ece_mean  ece_std
+model                                                                     
+Random Forest                         0.0092     0.0099    0.0242   0.0160
+XGBoost                               0.0070     0.0106    0.0104   0.0123
+ANN                                   0.0587     0.0576    0.0576   0.0565
+Logistic Regression                   0.0865     0.0396    0.0901   0.0294
+Supervised Ensemble (no anomaly)      0.0135     0.0144    0.0335   0.0275
+Hybrid Ensemble                       0.0132     0.0134    0.0339   0.0254
+
+=== E2: same detector, two threshold rules (95th-pct rule vs validation-tuned) ===
+        detector          rule  precision  recall     f1    auc    fpr
+Isolation Forest 95th-pct rule     0.1837  0.0238 0.0419 0.7373 0.0847
+Isolation Forest     val-tuned     0.8191  0.9835 0.8913 0.7373 0.5365
+     Autoencoder 95th-pct rule     0.8358  0.4460 0.5243 0.7853 0.1739
+     Autoencoder     val-tuned     0.7962  0.9631 0.8641 0.7853 0.6199
+(AUC is identical across rules by construction: a threshold cannot change AUC.)
+
+=== E3: chronological split (train on earliest blocks, test on latest) ===
+  chronological split lacks a class in some part; skipped (report this as a dataset limitation)
+
+=== E4: 5-fold x 2 block-wise CV, all models ===
+  rep 0 fold 0: hybrid F1=0.9996
+  rep 0 fold 1: hybrid F1=0.9943
+  rep 0 fold 2: hybrid F1=0.9831
+  rep 0 fold 3: hybrid F1=0.9986
+  rep 0 fold 4: hybrid F1=0.9890
+  rep 1 fold 0: hybrid F1=0.9888
+  rep 1 fold 1: hybrid F1=0.9927
+  rep 1 fold 2: hybrid F1=0.9695
+  rep 1 fold 3: hybrid F1=0.9999
+  rep 1 fold 4: hybrid F1=0.9997
+  Friedman on F1: chi2=65.871, p=0.00000, folds=10, models=10
+  Friedman on AUC: chi2=80.583, p=0.00000, folds=10, models=10
+                                  f1_mean  f1_std  auc_mean  auc_std
+Random Forest                      0.9887  0.0123    0.9997   0.0006
+XGBoost                            0.9893  0.0117    0.9997   0.0008
+ANN                                0.9819  0.0146    0.9767   0.0274
+Logistic Regression                0.9224  0.0372    0.9474   0.0358
+Decision Tree (d=3)                0.9581  0.0542    0.9650   0.0509
+Isolation Forest                   0.8925  0.0456    0.7838   0.0983
+Autoencoder                        0.8715  0.0412    0.8102   0.0857
+Supervised Ensemble (no anomaly)   0.9896  0.0088    0.9997   0.0003
+Hybrid Ensemble                    0.9915  0.0091    0.9994   0.0009
+Isolation Forest (95th-pct rule)   0.0739  0.1231    0.7838   0.0983
+Autoencoder (95th-pct rule)        0.5514  0.3045    0.8102   0.0857
+Best Single Feature                0.8965  0.0363    0.6854   0.1728
+Majority Class                     0.8312  0.0558    0.5000   0.0000
+
+=== E5: feature ablations ===
+             feature_set  n_features         model                f1               auc
+            All features          18 Random Forest 0.9907 +/- 0.0164 0.9994 +/- 0.0012
+            All features          18       XGBoost 0.9911 +/- 0.0146 0.9998 +/- 0.0003
+             No Pressure          17 Random Forest 0.9857 +/- 0.0182 0.9983 +/- 0.0034
+             No Pressure          17       XGBoost 0.9789 +/- 0.0176 0.9952 +/- 0.0049
+Raw only (no engineered)          12 Random Forest 0.9901 +/- 0.0157 0.9994 +/- 0.0012
+Raw only (no engineered)          12       XGBoost 0.9916 +/- 0.0148 0.9998 +/- 0.0003
+   Raw only, no Pressure          11 Random Forest 0.9843 +/- 0.0180 0.9964 +/- 0.0070
+   Raw only, no Pressure          11       XGBoost 0.9823 +/- 0.0157 0.9941 +/- 0.0084
+         Engineered only           6 Random Forest 0.9319 +/- 0.0392 0.9617 +/- 0.0236
+         Engineered only           6       XGBoost 0.9295 +/- 0.0360 0.9690 +/- 0.0176
+           Pressure only           1 Random Forest 0.9461 +/- 0.0195 0.9856 +/- 0.0092
+           Pressure only           1       XGBoost 0.9510 +/- 0.0290 0.9891 +/- 0.0087
+
+=== E6: legacy random-row split (leaky) vs block split ===
+              split             RF_F1            RF_AUC
+ random-row (leaky) 0.9999 +/- 0.0000 1.0000 +/- 0.0000
+block-wise (honest) 0.9907 +/- 0.0164 0.9994 +/- 0.0012
+
+=== E7: detection latency (seconds from fire onset to first alarm), pooled over seeds ===
+                                  onset_events  detected_pct  median_s  p90_s  missed
+model                                                                                
+Random Forest                                5          60.0       0.0    0.0       2
+XGBoost                                      5          60.0       0.0    0.8       2
+ANN                                          5          60.0       0.0  115.2       2
+Logistic Regression                          5          60.0       0.0    0.0       2
+Decision Tree (d=3)                          5          60.0       0.0   55.2       2
+Isolation Forest                             5         100.0       0.0    0.0       0
+Autoencoder                                  5          60.0       0.0    0.0       2
+Supervised Ensemble (no anomaly)             5          60.0       0.0    0.0       2
+Hybrid Ensemble                              5          60.0       0.0    0.0       2
+Isolation Forest (95th-pct rule)             5          20.0      10.0   10.0       4
+Autoencoder (95th-pct rule)                  5          60.0       0.0    2.4       2
+Best Single Feature                          5          40.0       0.0    0.0       3
+NOTE: onsets are only counted where the 0->1 transition lies inside a test block; blocks cut some events, so interpret as a lower-bound evaluation.
+Inference time (ms/sample, batch mode, this machine):
+Random Forest                       0.0109
+XGBoost                             0.0006
+ANN                                 0.0006
+Isolation Forest                    0.0226
+Autoencoder                         0.0052
+Hybrid Ensemble (all components)    0.0375
+
+=== Figures and SHAP ===
+Top-10 SHAP (RF, test sample):
+  Pressure_hPa          0.1386
+  roll5_TVOC_ppb        0.1046
+  TVOC_ppb              0.0885
+  Raw_Ethanol           0.0459
+  NC0_5                 0.0441
+  Humidity_pct          0.0369
+  PM1_0                 0.0361
+  PM2_5                 0.0211
+  NC1_0                 0.0199
+  Temperature_C         0.0196
+
+DONE in 313s. Everything is in D:\Educational\Research\Tests\Smoke_Detection_Code\results_v2
+Send back: run_log.txt and the CSV files (E1..E7), results.json.

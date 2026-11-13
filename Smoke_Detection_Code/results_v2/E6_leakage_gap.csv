@@ -1,0 +1,3 @@
+split,RF_F1,RF_AUC
+random-row (leaky),0.9999 +/- 0.0000,1.0000 +/- 0.0000
+block-wise (honest),0.9907 +/- 0.0164,0.9994 +/- 0.0012

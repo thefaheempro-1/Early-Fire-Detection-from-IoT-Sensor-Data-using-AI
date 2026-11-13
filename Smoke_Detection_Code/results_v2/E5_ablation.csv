@@ -1,0 +1,13 @@
+feature_set,n_features,model,f1,auc
+All features,18,Random Forest,0.9907 +/- 0.0164,0.9994 +/- 0.0012
+All features,18,XGBoost,0.9911 +/- 0.0146,0.9998 +/- 0.0003
+No Pressure,17,Random Forest,0.9857 +/- 0.0182,0.9983 +/- 0.0034
+No Pressure,17,XGBoost,0.9789 +/- 0.0176,0.9952 +/- 0.0049
+Raw only (no engineered),12,Random Forest,0.9901 +/- 0.0157,0.9994 +/- 0.0012
+Raw only (no engineered),12,XGBoost,0.9916 +/- 0.0148,0.9998 +/- 0.0003
+"Raw only, no Pressure",11,Random Forest,0.9843 +/- 0.0180,0.9964 +/- 0.0070
+"Raw only, no Pressure",11,XGBoost,0.9823 +/- 0.0157,0.9941 +/- 0.0084
+Engineered only,6,Random Forest,0.9319 +/- 0.0392,0.9617 +/- 0.0236
+Engineered only,6,XGBoost,0.9295 +/- 0.0360,0.9690 +/- 0.0176
+Pressure only,1,Random Forest,0.9461 +/- 0.0195,0.9856 +/- 0.0092
+Pressure only,1,XGBoost,0.9510 +/- 0.0290,0.9891 +/- 0.0087

@@ -1,0 +1,13 @@
+model,onset_events,detected_pct,median_s,p90_s,missed
+Random Forest,5,60.0,0.0,0.0,2
+XGBoost,5,60.0,0.0,0.8,2
+ANN,5,60.0,0.0,115.2,2
+Logistic Regression,5,60.0,0.0,0.0,2
+Decision Tree (d=3),5,60.0,0.0,55.2,2
+Isolation Forest,5,100.0,0.0,0.0,0
+Autoencoder,5,60.0,0.0,0.0,2
+Supervised Ensemble (no anomaly),5,60.0,0.0,0.0,2
+Hybrid Ensemble,5,60.0,0.0,0.0,2
+Isolation Forest (95th-pct rule),5,20.0,10.0,10.0,4
+Autoencoder (95th-pct rule),5,60.0,0.0,2.4000000000000004,2
+Best Single Feature,5,40.0,0.0,0.0,3
